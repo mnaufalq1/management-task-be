@@ -1,17 +1,19 @@
 import { Router, Request, Response } from 'express';
 import pool from '../config/database';
 import { errorResponse, successResponse } from '../helpers/response';
+import { supabase } from '../src/server';
 
 const router = Router();
 
 // GET /users - Ambil semua user
-router.get('/', async (req: Request, res: Response) => {
+// Endpoint untuk mengambil semua data dari tabel users
+router.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM users ORDER BY id ASC');
-    res.json(successResponse(result.rows));
+    const result = await pool.query('SELECT * FROM users');
+    res.json(result.rows); // Mengembalikan array data user
   } catch (err) {
-    console.error('Error GET /users:', err);
-    res.status(500).json(errorResponse('Terjadi kesalahan di server'));
+    console.error(err);
+    res.status(500).json({ error: 'Gagal mengambil data dari Supabase' });
   }
 });
 
@@ -41,4 +43,4 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-export default pool;
+export default router;
