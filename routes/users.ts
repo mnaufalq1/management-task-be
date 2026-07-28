@@ -18,8 +18,8 @@ router.get('/', async (req: Request, res: Response) => {
 // GET /users/:id - Ambil detail user berdasarkan ID
 router.get('/:id', async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id as string);
-    if (isNaN(id)) {
+    const id = String(req.params.id);
+    if (id === undefined || id === null ) {
       res.status(400).json(errorResponse('ID harus berupa angka'));
       return;
     }
@@ -40,19 +40,19 @@ router.get('/:id', async (req: Request, res: Response) => {
 // POST /users - Buat user baru (nama, email, role)
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { nama, email, role } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!nama || !email) {
-      res.status(400).json(errorResponse('Nama dan email wajib diisi'));
+    if (!name || !email || !password) {
+      res.status(400).json(errorResponse('Name, email, and password wajib diisi'));
       return;
     }
 
     const query = `
-      INSERT INTO users (nama, email, role)
-      VALUES ($1, $2, COALESCE($3, 'member'))
+      INSERT INTO users (name, email, password, role)
+      VALUES ($1, $2, $3, COALESCE($4, 'member'))
       RETURNING *
     `;
-    const result = await pool.query(query, [nama, email, role]);
+    const result = await pool.query(query, [name, email, password, role]);
 
     res.status(201).json(successResponse(result.rows[0], 'User berhasil dibuat'));
   } catch (err: any) {
@@ -68,17 +68,17 @@ router.post('/', async (req: Request, res: Response) => {
 // PATCH /users/:id - Update parsial data user (nama, email, role)
 router.patch('/:id', async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id as string);
-    if (isNaN(id)) {
+    const id = String(req.params.id);
+    if (id === undefined || id === null) {
       res.status(400).json(errorResponse('ID harus berupa angka'));
       return;
     }
 
-    const { nama, email, role } = req.body;
+    const { name, email,password,role } = req.body;
 
     // Cek apakah ada data yang dikirim
-    if (nama === undefined && email === undefined && role === undefined) {
-      res.status(400).json(errorResponse('Setidaknya kirimkan nama, email, atau role untuk di-update'));
+    if (name === undefined && email === undefined && password === undefined && role === undefined) {
+      res.status(400).json(errorResponse('Setidaknya kirimkan name, email, password, atau role untuk di-update'));
       return;
     }
 
@@ -89,17 +89,18 @@ router.patch('/:id', async (req: Request, res: Response) => {
       return;
     }
 
-    const updatedNama = nama !== undefined ? nama : existingUser.rows[0].nama;
+    const updatedName = name !== undefined ? name : existingUser.rows[0].name;
     const updatedEmail = email !== undefined ? email : existingUser.rows[0].email;
+    const updatedPassword = password !== undefined ? password : existingUser.rows[0].password;
     const updatedRole = role !== undefined ? role : existingUser.rows[0].role;
 
     const query = `
       UPDATE users
-      SET nama = $1, email = $2, role = $3
-      WHERE id = $4
+      SET name = $1, email = $2, password = $3, role = $4
+      WHERE id = $5
       RETURNING *
     `;
-    const result = await pool.query(query, [updatedNama, updatedEmail, updatedRole, id]);
+    const result = await pool.query(query, [updatedName, updatedEmail, updatedPassword, updatedRole, id]);
 
     res.json(successResponse(result.rows[0], 'User berhasil diperbarui'));
   } catch (err: any) {
@@ -115,8 +116,8 @@ router.patch('/:id', async (req: Request, res: Response) => {
 // DELETE /users/:id - Hapus user
 router.delete('/:id', async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id as string);
-    if (isNaN(id)) {
+    const id = String(req.params.id);
+    if (id === undefined || id === null) {
       res.status(400).json(errorResponse('ID harus berupa angka'));
       return;
     }
