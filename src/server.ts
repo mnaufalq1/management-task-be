@@ -4,14 +4,17 @@ dotenv.config();
 import express, { Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
-import pool from "./config/database";
-import userRoutes from "./routes/users.routes";
-import projectRoutes from "./routes/projects.routes";
+import pool from "./config/database.js";
+import userRoutes from "./routes/users.routes.js";
+import projectRoutes from "./routes/projects.routes.js";
 import { createClient } from "@supabase/supabase-js";
-import commentsRoutes from "./routes/comments.routes";
-import tasksRoutes from "./routes/tasks.routes";
-import projectMembersRouter from "./routes/project_members.routes";
-import authRoutes from "./routes/auth.routes";
+import commentsRoutes from "./routes/comments.routes.js";
+import tasksRoutes from "./routes/tasks.routes.js";
+import projectMembersRouter from "./routes/project_members.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+import { apiReference } from "@scalar/express-api-reference";
+import openapiDocument from "../openapi.json";
+import openapiSpec from "../openapi.json";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -23,7 +26,20 @@ export const supabase =
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"],
+        imgSrc: ["'self'", "data:", "https://cdn.jsdelivr.net", "https://scalar.com"],
+        connectSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      },
+    },
+  })
+);
 app.use(cors());
 app.use(express.json());
 app.use("/users", userRoutes);
@@ -50,6 +66,17 @@ app.get("/test", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
+app.use(
+  '/reference',
+  apiReference({
+    spec: {
+      content: openapiSpec, // Menggunakan objek JSON yang di-import
+    },
+    theme: 'solarized', // Kamu bisa ubah tema: 'purple', 'moon', 'solarized', dll.
+  })
+);
+
+app.listen(3000, () => {
+  console.log('Server berjalan di http://localhost:3000');
+  console.log('Dokumentasi Scalar dapat diakses di http://localhost:3000/reference');
 });

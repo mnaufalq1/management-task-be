@@ -1,0 +1,782 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Task Management API",
+    "version": "1.0.0",
+    "description": "Dokumentasi API untuk aplikasi Task Management"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Server Lokal"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register user baru",
+        "description": "Endpoint ini digunakan untuk mendaftarkan user baru.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Budi"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "budi@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "developer",
+                    "description": "Opsional, default ke 'developer' jika tidak diisi"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pendaftaran berhasil"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "description": "Endpoint ini digunakan untuk masuk ke dalam aplikasi menggunakan akun terdaftar.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "budi@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login berhasil"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Mendapatkan daftar semua user",
+        "description": "Endpoint ini digunakan untuk mengambil seluruh user yang terdaftar dalam sistem.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil daftar user"
+          }
+        }
+      },
+      "post": {
+        "summary": "Membuat user baru",
+        "description": "Endpoint ini digunakan untuk menambahkan user baru ke dalam sistem.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Budi"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "budi@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "member"
+                  }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User berhasil dibuat"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Mendapatkan detail user berdasarkan ID",
+        "description": "Endpoint ini digunakan untuk mengambil detail data user spesifik.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID user yang akan diambil",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail user"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mengupdate data user",
+        "description": "Endpoint ini digunakan untuk memperbarui data user secara parsial (kirim field yang ingin diubah saja).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID user yang akan diperbarui",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Budi Baru"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "budibaru@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "passwordbaru"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "admin"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User berhasil diperbarui"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus user",
+        "description": "Endpoint ini digunakan untuk menghapus user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID user yang akan dihapus",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User berhasil dihapus"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "summary": "Mendapatkan daftar semua project",
+        "description": "Endpoint ini digunakan untuk mengambil seluruh project yang terdaftar.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil daftar project"
+          }
+        }
+      },
+      "post": {
+        "summary": "Membuat project baru",
+        "description": "Endpoint ini digunakan untuk menambahkan project baru ke dalam sistem.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "project_name": {
+                    "type": "string",
+                    "example": "Project Alpha"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Deskripsi project pertama"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "pending",
+                    "description": "Status project (contoh: pending, active, completed)"
+                  }
+                },
+                "required": ["project_name", "description", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Project berhasil dibuat"
+          }
+        }
+      }
+    },
+    "/projects/{id}": {
+      "get": {
+        "summary": "Mendapatkan detail project berdasarkan ID",
+        "description": "Endpoint ini digunakan untuk mengambil detail project berdasarkan ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project yang akan diambil",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail project"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mengupdate data project",
+        "description": "Endpoint ini digunakan untuk mengupdate data project (semua field wajib dikirim).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project yang akan diupdate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "project_name": {
+                    "type": "string",
+                    "example": "Project Alpha Edit"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Deskripsi project pertama terupdate"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "active"
+                  }
+                },
+                "required": ["project_name", "description", "status"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project berhasil diupdate"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus project",
+        "description": "Endpoint ini digunakan untuk menghapus project.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project yang akan dihapus",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project berhasil dihapus"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "summary": "Mendapatkan semua daftar tugas",
+        "description": "Endpoint ini digunakan untuk mengambil seluruh tugas yang ada.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil daftar tugas"
+          }
+        }
+      },
+      "post": {
+        "summary": "Membuat tugas baru",
+        "description": "Endpoint ini digunakan untuk menambahkan tugas baru ke dalam sistem.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Membuat dokumentasi API"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Menambahkan detail parameter pada openapi.json"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "todo"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "example": "high"
+                  },
+                  "deadline": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-08-30T12:00:00Z"
+                  }
+                },
+                "required": ["title", "description", "status", "priority", "deadline"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tugas berhasil dibuat"
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "summary": "Mendapatkan detail tugas berdasarkan ID",
+        "description": "Endpoint ini digunakan untuk mengambil detail tugas berdasarkan ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID tugas yang akan diambil",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail tugas"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mengupdate tugas",
+        "description": "Endpoint ini digunakan untuk mengupdate data tugas secara keseluruhan (semua field wajib dikirim).",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID tugas yang akan diupdate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Judul Tugas Baru"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Deskripsi terupdate"
+                  },
+                  "project_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "in_progress"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "example": "medium"
+                  },
+                  "deadline": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2026-09-01T17:00:00Z"
+                  }
+                },
+                "required": ["title", "description", "project_id", "status", "priority", "deadline"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tugas berhasil diupdate"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus tugas",
+        "description": "Endpoint ini digunakan untuk menghapus tugas.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID tugas yang akan dihapus",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tugas berhasil dihapus"
+          }
+        }
+      }
+    },
+    "/comments": {
+      "get": {
+        "summary": "Mendapatkan daftar semua komentar",
+        "description": "Endpoint ini digunakan untuk mengambil seluruh komentar yang ada.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil daftar komentar"
+          }
+        }
+      },
+      "post": {
+        "summary": "Membuat komentar baru",
+        "description": "Endpoint ini digunakan untuk menambahkan komentar baru.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string",
+                    "example": "Komentar saya pada tugas ini"
+                  },
+                  "task_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "example": "1"
+                  }
+                },
+                "required": ["comment", "task_id", "user_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Komentar berhasil dibuat"
+          }
+        }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "summary": "Mendapatkan detail komentar berdasarkan ID",
+        "description": "Endpoint ini digunakan untuk mengambil detail komentar berdasarkan ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID komentar yang akan diambil",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail komentar"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mengupdate isi komentar",
+        "description": "Endpoint ini digunakan untuk memperbarui isi komentar.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID komentar yang akan diupdate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": {
+                    "type": "string",
+                    "example": "Komentar terupdate"
+                  }
+                },
+                "required": ["comment"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Komentar berhasil diupdate"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus komentar",
+        "description": "Endpoint ini digunakan untuk menghapus komentar.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID komentar yang akan dihapus",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Komentar berhasil dihapus"
+          }
+        }
+      }
+    },
+    "/project_members": {
+      "get": {
+        "summary": "Mendapatkan daftar semua project members",
+        "description": "Endpoint ini digunakan untuk mengambil daftar project members. Bisa difilter opsional berdasarkan project_id atau user_id.",
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter berdasarkan ID project",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "required": false,
+            "description": "Filter berdasarkan ID user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil daftar project members"
+          }
+        }
+      },
+      "post": {
+        "summary": "Menambahkan member baru ke project",
+        "description": "Endpoint ini digunakan untuk menambahkan project member baru.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "example": "1"
+                  }
+                },
+                "required": ["project_id", "user_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Project member berhasil ditambahkan"
+          }
+        }
+      }
+    },
+    "/project_members/{id}": {
+      "get": {
+        "summary": "Mendapatkan detail project member berdasarkan ID",
+        "description": "Endpoint ini digunakan untuk mengambil detail project member berdasarkan ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project member yang akan diambil",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil mengambil detail project member"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mengupdate data project member",
+        "description": "Endpoint ini digunakan untuk memperbarui data project member secara parsial.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project member yang akan diupdate",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "project_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "example": "2"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project member berhasil diperbarui"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Menghapus project member",
+        "description": "Endpoint ini digunakan untuk menghapus project member.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID project member yang akan dihapus",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project member berhasil dihapus"
+          }
+        }
+      }
+    }
+  }
+}

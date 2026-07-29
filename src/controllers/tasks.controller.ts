@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { successResponse, errorResponse } from '../helpers/response';
-import * as taskService from '../services/tasks.service';
+import { successResponse, errorResponse } from '../helpers/response.js';
+import * as taskService from '../services/tasks.service.js';
 
 // GET /tasks
 export const getTasks = async (req: Request, res: Response) => {
