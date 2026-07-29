@@ -1,4 +1,4 @@
-import pool from "../config/database";
+import pool from "../config/database.js";
 
 export const findAllComments = async () => {
   const result = await pool.query("SELECT * FROM comments ORDER BY id ASC");

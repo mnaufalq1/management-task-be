@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import pool from "../config/database"; // Menggunakan pool PostgreSQL kamu
+import pool from "../config/database.js"; // Menggunakan pool PostgreSQL kamu
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {

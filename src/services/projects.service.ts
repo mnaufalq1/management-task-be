@@ -1,4 +1,4 @@
-import pool from "../config/database";
+import pool from "../config/database.js";
 
 // GET /projects - Ambil semua project
 export const findAllProjects = async () => {
