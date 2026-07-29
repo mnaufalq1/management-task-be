@@ -17,8 +17,8 @@ export const insertComment = async (data: {
 }) => {
   const { comment, task_id, user_id } = data;
   const query = `
-    INSERT INTO comments (comment, task_id, user_id)
-    VALUES ($1, $2, $3)
+    INSERT INTO comments (comment, task_id, user_id, created_at)
+    VALUES ($1, $2, $3, NOW())
     RETURNING *
   `;
   const result = await pool.query(query, [comment, task_id, user_id]);

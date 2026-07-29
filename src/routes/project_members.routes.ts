@@ -5,7 +5,7 @@ import {
   createProjectMember,
   updateProjectMember,
   deleteProjectMember,
-} from "../controller/project_members.controller";
+} from "../controllers/project_members.controller";
 
 const router = Router();
 
@@ -15,4 +15,4 @@ router.post("/", createProjectMember);
 router.patch("/:id", updateProjectMember);
 router.delete("/:id", deleteProjectMember);
 
-export default router; 
+export default router;

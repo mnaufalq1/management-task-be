@@ -50,12 +50,13 @@ export const createTask = async (req: Request, res: Response) => {
 export const updateTaskStatus = async (req: Request, res: Response) => {
   try {
     const id = String(req.params.id);
-    const { status } = req.body;
-    if (!status) {
-      return res.status(400).json(errorResponse('Status wajib diisi'));
+    const { title, description, project_id, status, priority, deadline } = req.body;
+
+    if (!title || !description || !project_id || !status || !priority || !deadline) {
+      return res.status(400).json(errorResponse('Semua field wajib diisi'));
     }
 
-    const updatedTask = await taskService.updateTaskStatusById(id);
+    const updatedTask = await taskService.updateTaskStatusById(id, req.body);
     if (!updatedTask) {
       return res.status(404).json(errorResponse('Task tidak ditemukan'));
     }
