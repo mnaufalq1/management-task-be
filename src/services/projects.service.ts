@@ -17,15 +17,16 @@ export const findProjectById = async (id: string) => {
 export const insertProject = async (data: {
     project_name: string;
     description?: string;
+    user_id: string;
     status?: string;
 }) => {
-    const { project_name, description, status } = data;
+    const { project_name, description, user_id, status } = data;
     const query = `
-        INSERT INTO projects (project_name, description, status)
-        VALUES ($1, $2, COALESCE($3, 'pending'))
+        INSERT INTO projects (project_name, description, user_id, status, created_at, updated_at)
+        VALUES ($1, $2, $3, COALESCE($4, 'pending'), NOW(), NOW())
         RETURNING *
     `;
-    const result = await pool.query(query, [project_name, description, status]);
+    const result = await pool.query(query, [project_name, description, user_id, status]);
     return result.rows[0];
 }
 
@@ -33,19 +34,21 @@ export const insertProject = async (data: {
 export const updateProjectById = async (id: string, data: {
     project_name?: string;
     description?: string;
+    user_id: string;
     status?: string;
 }) => {
-    const { project_name, description, status } = data;
+    const { project_name, description, user_id, status } = data;
     const query = `
         UPDATE projects
         SET project_name = COALESCE($1, project_name),
             description = COALESCE($2, description),
-            status = COALESCE($3, status),
+            user_id = COALESCE($3, user_id),
+            status = COALESCE($4, status),
             updated_at = NOW()
-        WHERE id = $4
+        WHERE id = $5
         RETURNING *
     `;
-    const result = await pool.query(query, [project_name, description, status, id]);
+    const result = await pool.query(query, [project_name, description, user_id, status, id]);
     return result.rows[0] || null;
 }
 

@@ -15,19 +15,21 @@ export const findTaskById = async (id: string) => {
 export const insertTask = async (data: {
   title: string;
   description: string;
+  project_id: string;
   status: string;
   priority: string;
   deadline: string;
 }) => {
-  const { title, description, status, priority, deadline } = data;
+  const { title, description, project_id, status, priority, deadline } = data;
   const query = `
-    INSERT INTO tasks (title, description, status, priority, deadline)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO tasks (title, description, project_id, status, priority, deadline)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
   `;
   const result = await pool.query(query, [
     title,
     description,
+    project_id,
     status,
     priority,
     deadline,
@@ -35,14 +37,35 @@ export const insertTask = async (data: {
   return result.rows[0];
 };
 
-export const updateTaskStatusById = async (id: string) => {
+export const updateTaskStatusById = async (
+  id: string, 
+  data: {
+    title: string;
+    description: string;
+    project_id: string;
+    status: string;
+    priority: string;
+    deadline: string;
+  }
+) => {
+  const { title, description, project_id, status, priority, deadline } = data;
+  
+  // Koma sebelum WHERE sudah dihapus
   const query = `
     UPDATE tasks
-    SET status = $1, updated_at = NOW()
-    WHERE id = $2
+    SET title = $1, description = $2, project_id = $3, status = $4, priority = $5, deadline = $6, updated_at = NOW() 
+    WHERE id = $7
     RETURNING *
   `;
-  const result = await pool.query(query, [id]);
+  const result = await pool.query(query, [
+    title,
+    description,
+    project_id,
+    status,
+    priority,
+    deadline,
+    id
+  ]);
   return result.rows[0] || null;
 };
 
