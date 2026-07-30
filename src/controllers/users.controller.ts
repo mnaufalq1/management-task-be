@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { errorResponse, successResponse } from '../helpers/response';
-import * as userService from '../services/users.service';
+import { errorResponse, successResponse } from '../helpers/response.js';
+import * as userService from '../services/users.service.js';
 
 // GET /users - Ambil semua user
 export const getUsers = async (req: Request, res: Response) => {

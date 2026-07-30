@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import { successResponse, errorResponse } from '../helpers/response';
-import * as projectService from '../services/projects.service';
+import { successResponse, errorResponse } from '../helpers/response.js';
+import * as projectService from '../services/projects.service.js';
 
 // GET /projects
 export const getProjects = async (req: Request, res: Response) => {

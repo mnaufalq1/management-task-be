@@ -1,5 +1,5 @@
-import { errorResponse, successResponse } from "../helpers/response";
-import * as projectMemberService from "../services/project_members.service";
+import { errorResponse, successResponse } from "../helpers/response.js";
+import * as projectMemberService from "../services/project_members.service.js";
 // GET /project_members - Ambil semua project member
 export const getProjectMembers = async (req, res) => {
     try {
