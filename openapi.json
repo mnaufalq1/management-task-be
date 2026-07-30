@@ -33,12 +33,7 @@
                   },
                   "password": {
                     "type": "string",
-                    "example": "password123"
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "developer",
-                    "description": "Opsional, default ke 'developer' jika tidak diisi"
+                    "example": "Password123!"
                   }
                 },
                 "required": ["name", "email", "password"]
@@ -70,7 +65,7 @@
                   },
                   "password": {
                     "type": "string",
-                    "example": "password123"
+                    "example": "Password123!"
                   }
                 },
                 "required": ["email", "password"]

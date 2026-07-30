@@ -1,4 +1,5 @@
-import pool from "../config/database.js"; // Menggunakan pool PostgreSQL kamu
+import * as authService from "../services/auth.service.js";
+import { validateEmail, validateName, validatePassword } from "./validationData.controller.js";
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -10,15 +11,14 @@ export const login = async (req, res) => {
             return;
         }
         // 2. Cari user di tabel public.users berdasarkan email
-        const result = await pool.query("SELECT id, name, email, password, role FROM users WHERE email = $1", [email]);
+        const user = await authService.findUserByEmail(email);
         // 3. Jika user tidak ditemukan
-        if (result.rows.length === 0) {
+        if (!user) {
             res.status(401).json({
                 message: "Gagal login. Email tidak terdaftar."
             });
             return;
         }
-        const user = result.rows[0];
         // 4. Pencocokan password (pencocokan string biasa)
         if (user.password !== password) {
             res.status(401).json({
@@ -40,30 +40,40 @@ export const login = async (req, res) => {
 };
 export const register = async (req, res) => {
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password } = req.body;
+        const emailValidation = validateEmail(email);
+        const nameValidation = validateName(name);
+        const passwordValidation = validatePassword(password);
         // 1. Validasi input wajib
-        if (!name || !email || !password) {
+        if (!emailValidation.isValid || !nameValidation.isValid || !passwordValidation.isValid) {
             res.status(400).json({
-                message: "Nama, email, dan password wajib diisi!"
+                message: (emailValidation.isValid ? "" : emailValidation.message) + " " +
+                    (nameValidation.isValid ? "" : nameValidation.message) + " " +
+                    (passwordValidation.isValid ? "" : passwordValidation.message)
             });
             return;
         }
         // 2. Cek apakah email sudah terdaftar di database
-        const checkEmail = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
-        if (checkEmail.rows.length > 0) {
+        const user = await authService.findUserByEmail(email);
+        if (user) {
             res.status(400).json({
                 message: "Email sudah terdaftar, silakan gunakan email lain."
             });
             return;
         }
         // 3. Simpan data user baru ke tabel users
-        // (role opsional, jika tidak dikirim akan default ke 'developer')
-        const userRole = role || "developer";
-        const newUser = await pool.query("INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role", [name, email, password, userRole]);
+        // (role opsional, jika tidak dikirim akan default ke 'member')
+        const userRole = "member";
+        const newUser = await authService.createUser({
+            name,
+            email,
+            password,
+            role: userRole
+        });
         // 4. Berikan respon berhasil
         res.status(201).json({
             message: "Pendaftaran berhasil!",
-            user: newUser.rows[0]
+            user: newUser
         });
     }
     catch (err) {

@@ -1,4 +1,4 @@
-import pool from '../config/database';
+import pool from '../config/database.js';
 export const findAllUsers = async () => {
     const result = await pool.query('SELECT * FROM users ORDER BY id ASC');
     return result.rows;

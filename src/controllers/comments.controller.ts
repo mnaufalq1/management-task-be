@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { successResponse, errorResponse } from '../helpers/response';
-import * as commentService from '../services/comments.service';
+import { successResponse, errorResponse } from '../helpers/response.js';
+import * as commentService from '../services/comments.service.js';
 
 // GET /comments
 export const getComments = async (req: Request, res: Response) => {
