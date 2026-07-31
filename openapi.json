@@ -36,7 +36,11 @@
                     "example": "Password123!"
                   }
                 },
-                "required": ["name", "email", "password"]
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -45,7 +49,10 @@
           "201": {
             "description": "Pendaftaran berhasil"
           }
-        }
+        },
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/login": {
@@ -68,7 +75,10 @@
                     "example": "Password123!"
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -77,7 +87,10 @@
           "200": {
             "description": "Login berhasil"
           }
-        }
+        },
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/users": {
@@ -88,7 +101,10 @@
           "200": {
             "description": "Berhasil mengambil daftar user"
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       },
       "post": {
         "summary": "Membuat user baru",
@@ -117,7 +133,11 @@
                     "example": "member"
                   }
                 },
-                "required": ["name", "email", "password"]
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -126,7 +146,10 @@
           "201": {
             "description": "User berhasil dibuat"
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/users/{id}": {
@@ -148,7 +171,10 @@
           "200": {
             "description": "Berhasil mengambil detail user"
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       },
       "patch": {
         "summary": "Mengupdate data user",
@@ -196,7 +222,10 @@
           "200": {
             "description": "User berhasil diperbarui"
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       },
       "delete": {
         "summary": "Menghapus user",
@@ -216,7 +245,10 @@
           "200": {
             "description": "User berhasil dihapus"
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/projects": {
@@ -227,7 +259,10 @@
           "200": {
             "description": "Berhasil mengambil daftar project"
           }
-        }
+        },
+        "tags": [
+          "Projects"
+        ]
       },
       "post": {
         "summary": "Membuat project baru",
@@ -253,7 +288,11 @@
                     "description": "Status project (contoh: pending, active, completed)"
                   }
                 },
-                "required": ["project_name", "description", "status"]
+                "required": [
+                  "project_name",
+                  "description",
+                  "status"
+                ]
               }
             }
           }
@@ -262,7 +301,10 @@
           "201": {
             "description": "Project berhasil dibuat"
           }
-        }
+        },
+        "tags": [
+          "Projects"
+        ]
       }
     },
     "/projects/{id}": {
@@ -284,7 +326,10 @@
           "200": {
             "description": "Berhasil mengambil detail project"
           }
-        }
+        },
+        "tags": [
+          "Projects"
+        ]
       },
       "patch": {
         "summary": "Mengupdate data project",
@@ -320,7 +365,11 @@
                     "example": "active"
                   }
                 },
-                "required": ["project_name", "description", "status"]
+                "required": [
+                  "project_name",
+                  "description",
+                  "status"
+                ]
               }
             }
           }
@@ -329,7 +378,10 @@
           "200": {
             "description": "Project berhasil diupdate"
           }
-        }
+        },
+        "tags": [
+          "Projects"
+        ]
       },
       "delete": {
         "summary": "Menghapus project",
@@ -349,7 +401,10 @@
           "200": {
             "description": "Project berhasil dihapus"
           }
-        }
+        },
+        "tags": [
+          "Projects"
+        ]
       }
     },
     "/tasks": {
@@ -360,7 +415,10 @@
           "200": {
             "description": "Berhasil mengambil daftar tugas"
           }
-        }
+        },
+        "tags": [
+          "Tasks"
+        ]
       },
       "post": {
         "summary": "Membuat tugas baru",
@@ -394,7 +452,13 @@
                     "example": "2026-08-30T12:00:00Z"
                   }
                 },
-                "required": ["title", "description", "status", "priority", "deadline"]
+                "required": [
+                  "title",
+                  "description",
+                  "status",
+                  "priority",
+                  "deadline"
+                ]
               }
             }
           }
@@ -403,7 +467,10 @@
           "201": {
             "description": "Tugas berhasil dibuat"
           }
-        }
+        },
+        "tags": [
+          "Tasks"
+        ]
       }
     },
     "/tasks/{id}": {
@@ -425,7 +492,10 @@
           "200": {
             "description": "Berhasil mengambil detail tugas"
           }
-        }
+        },
+        "tags": [
+          "Tasks"
+        ]
       },
       "patch": {
         "summary": "Mengupdate tugas",
@@ -474,7 +544,14 @@
                     "example": "2026-09-01T17:00:00Z"
                   }
                 },
-                "required": ["title", "description", "project_id", "status", "priority", "deadline"]
+                "required": [
+                  "title",
+                  "description",
+                  "project_id",
+                  "status",
+                  "priority",
+                  "deadline"
+                ]
               }
             }
           }
@@ -483,7 +560,10 @@
           "200": {
             "description": "Tugas berhasil diupdate"
           }
-        }
+        },
+        "tags": [
+          "Tasks"
+        ]
       },
       "delete": {
         "summary": "Menghapus tugas",
@@ -503,7 +583,10 @@
           "200": {
             "description": "Tugas berhasil dihapus"
           }
-        }
+        },
+        "tags": [
+          "Tasks"
+        ]
       }
     },
     "/comments": {
@@ -514,7 +597,10 @@
           "200": {
             "description": "Berhasil mengambil daftar komentar"
           }
-        }
+        },
+        "tags": [
+          "Comments"
+        ]
       },
       "post": {
         "summary": "Membuat komentar baru",
@@ -539,7 +625,11 @@
                     "example": "1"
                   }
                 },
-                "required": ["comment", "task_id", "user_id"]
+                "required": [
+                  "comment",
+                  "task_id",
+                  "user_id"
+                ]
               }
             }
           }
@@ -548,7 +638,10 @@
           "201": {
             "description": "Komentar berhasil dibuat"
           }
-        }
+        },
+        "tags": [
+          "Comments"
+        ]
       }
     },
     "/comments/{id}": {
@@ -570,7 +663,10 @@
           "200": {
             "description": "Berhasil mengambil detail komentar"
           }
-        }
+        },
+        "tags": [
+          "Comments"
+        ]
       },
       "patch": {
         "summary": "Mengupdate isi komentar",
@@ -598,7 +694,9 @@
                     "example": "Komentar terupdate"
                   }
                 },
-                "required": ["comment"]
+                "required": [
+                  "comment"
+                ]
               }
             }
           }
@@ -607,7 +705,10 @@
           "200": {
             "description": "Komentar berhasil diupdate"
           }
-        }
+        },
+        "tags": [
+          "Comments"
+        ]
       },
       "delete": {
         "summary": "Menghapus komentar",
@@ -627,7 +728,10 @@
           "200": {
             "description": "Komentar berhasil dihapus"
           }
-        }
+        },
+        "tags": [
+          "Comments"
+        ]
       }
     },
     "/project_members": {
@@ -658,7 +762,10 @@
           "200": {
             "description": "Berhasil mengambil daftar project members"
           }
-        }
+        },
+        "tags": [
+          "Project Members"
+        ]
       },
       "post": {
         "summary": "Menambahkan member baru ke project",
@@ -679,7 +786,10 @@
                     "example": "1"
                   }
                 },
-                "required": ["project_id", "user_id"]
+                "required": [
+                  "project_id",
+                  "user_id"
+                ]
               }
             }
           }
@@ -688,7 +798,10 @@
           "201": {
             "description": "Project member berhasil ditambahkan"
           }
-        }
+        },
+        "tags": [
+          "Project Members"
+        ]
       }
     },
     "/project_members/{id}": {
@@ -710,7 +823,10 @@
           "200": {
             "description": "Berhasil mengambil detail project member"
           }
-        }
+        },
+        "tags": [
+          "Project Members"
+        ]
       },
       "patch": {
         "summary": "Mengupdate data project member",
@@ -750,7 +866,10 @@
           "200": {
             "description": "Project member berhasil diperbarui"
           }
-        }
+        },
+        "tags": [
+          "Project Members"
+        ]
       },
       "delete": {
         "summary": "Menghapus project member",
@@ -770,8 +889,37 @@
           "200": {
             "description": "Project member berhasil dihapus"
           }
-        }
+        },
+        "tags": [
+          "Project Members"
+        ]
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoint autentikasi"
+    },
+    {
+      "name": "Users",
+      "description": "Endpoint manajemen user"
+    },
+    {
+      "name": "Projects",
+      "description": "Endpoint manajemen project"
+    },
+    {
+      "name": "Tasks",
+      "description": "Endpoint manajemen tugas"
+    },
+    {
+      "name": "Comments",
+      "description": "Endpoint manajemen komentar"
+    },
+    {
+      "name": "Project Members",
+      "description": "Endpoint manajemen anggota project"
+    }
+  ]
 }

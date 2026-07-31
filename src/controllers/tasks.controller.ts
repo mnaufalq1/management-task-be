@@ -32,9 +32,9 @@ export const getTaskById = async (req: Request, res: Response) => {
 // POST /tasks
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const { title, description, status, priority, deadline } = req.body;
+    const { title, description, project_id, status, priority, deadline } = req.body;
 
-    if (!title || !description || !status || !priority || !deadline) {
+    if (!title || !description || !project_id || !status || !priority || !deadline) {
       return res.status(400).json(errorResponse('Semua field wajib diisi'));
     }
 
