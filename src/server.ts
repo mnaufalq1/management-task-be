@@ -3,7 +3,7 @@ dotenv.config();
 
 import express, { Request, Response } from "express";
 import cors from "cors";
-import helmetPkg from "helmet";
+import helmet from "helmet";
 import pool from "./config/database.js";
 import userRoutes from "./routes/users.routes.js";
 import projectRoutes from "./routes/projects.routes.js";
@@ -25,10 +25,9 @@ export const supabase =
 
 const app = express();
 const port = process.env.PORT || 3000;
-const helmet = (helmetPkg as unknown as { default: typeof helmetPkg }).default || helmetPkg;
 
 app.use(
-  helmet({
+  (helmet as any)({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
