@@ -13,8 +13,13 @@ import tasksRoutes from "./routes/tasks.routes.js";
 import projectMembersRouter from "./routes/project_members.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import { apiReference } from "@scalar/express-api-reference";
-import openapiDocument from "../openapi.json";
-import openapiSpec from "../openapi.json";
+import fs from 'fs';
+import path from 'path';
+
+// Ganti baris "import openapiDocument from ..." dengan ini:
+const openapiPath = path.resolve(process.cwd(), 'openapi.json');
+const openapiDocument = JSON.parse(fs.readFileSync(openapiPath, 'utf8'));
+const openapiSpec = openapiDocument;
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
