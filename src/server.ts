@@ -13,8 +13,10 @@ import tasksRoutes from "./routes/tasks.routes.js";
 import projectMembersRouter from "./routes/project_members.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import { apiReference } from "@scalar/express-api-reference";
-import openapiDocument from "../openapi.json";
-import openapiSpec from "../openapi.json";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const openapiSpec = require("../openapi.json");
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
