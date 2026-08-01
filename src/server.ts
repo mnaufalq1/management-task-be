@@ -80,3 +80,5 @@ app.listen(3000, () => {
   console.log('Server berjalan di http://localhost:3000');
   console.log('Dokumentasi Scalar dapat diakses di http://localhost:3000/reference');
 });
+
+export default app;
