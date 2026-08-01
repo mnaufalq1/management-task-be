@@ -29,8 +29,8 @@ export const getTaskById = async (req, res) => {
 // POST /tasks
 export const createTask = async (req, res) => {
     try {
-        const { title, description, status, priority, deadline } = req.body;
-        if (!title || !description || !status || !priority || !deadline) {
+        const { title, description, project_id, status, priority, deadline } = req.body;
+        if (!title || !description || !project_id || !status || !priority || !deadline) {
             return res.status(400).json(errorResponse('Semua field wajib diisi'));
         }
         const newTask = await taskService.insertTask(req.body);
