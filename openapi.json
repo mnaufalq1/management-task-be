@@ -394,7 +394,7 @@
                     "example": "2026-08-30T12:00:00Z"
                   }
                 },
-                "required": ["title", "description", "status", "priority", "deadline"]
+                "required": ["title", "description","project_id", "status", "priority", "deadline"]
               }
             }
           }
