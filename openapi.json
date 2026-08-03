@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Server Lokal"
+      "url": "https://management-task-be-fxgb.vercel.app/",
+      "description": "Server Online Vercel"
     }
   ],
   "paths": {
