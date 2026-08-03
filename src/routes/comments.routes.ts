@@ -6,13 +6,14 @@ import {
   updateComment,
   deleteComment,
 } from "../controllers/comments.controller.js";
+import { authenticateToken } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.get("/", getComments);
-router.get("/:id", getCommentById);
-router.post("/", createComment);
-router.patch("/:id", updateComment);
-router.delete("/:id", deleteComment);
+router.get("/", authenticateToken, getComments);
+router.get("/:id", authenticateToken, getCommentById);
+router.post("/", authenticateToken, createComment);
+router.patch("/:id", authenticateToken, updateComment);
+router.delete("/:id", authenticateToken, deleteComment);
 
 export default router;

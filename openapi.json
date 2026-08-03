@@ -47,7 +47,19 @@
         },
         "responses": {
           "201": {
-            "description": "Pendaftaran berhasil"
+            "description": "Pendaftaran berhasil",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Pendaftaran berhasil!" },
+                    "token": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+                    "user": { "type": "object" }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -85,7 +97,19 @@
         },
         "responses": {
           "200": {
-            "description": "Login berhasil"
+            "description": "Login berhasil",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Berhasil masuk!" },
+                    "token": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." },
+                    "user": { "type": "object" }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -920,5 +944,14 @@
       "name": "Project Members",
       "description": "Endpoint manajemen anggota project"
     }
-  ]
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
 }
