@@ -127,10 +127,6 @@
                   "password": {
                     "type": "string",
                     "example": "password123"
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "member"
                   }
                 },
                 "required": [
@@ -278,6 +274,10 @@
                     "type": "string",
                     "example": "Project Alpha"
                   },
+                  "user_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
                   "description": {
                     "type": "string",
                     "example": "Deskripsi project pertama"
@@ -290,6 +290,7 @@
                 },
                 "required": [
                   "project_name",
+                  "user_id",
                   "description",
                   "status"
                 ]
