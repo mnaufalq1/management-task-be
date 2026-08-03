@@ -438,6 +438,10 @@
                     "type": "string",
                     "example": "Menambahkan detail parameter pada openapi.json"
                   },
+                  "project_id": {
+                    "type": "string",
+                    "example": "1"
+                  },
                   "status": {
                     "type": "string",
                     "example": "todo"
