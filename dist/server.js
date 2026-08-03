@@ -12,7 +12,9 @@ import tasksRoutes from "./routes/tasks.routes.js";
 import projectMembersRouter from "./routes/project_members.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import { apiReference } from "@scalar/express-api-reference";
-import openapiSpec from "../openapi.json";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const openapiSpec = require("../openapi.json");
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 export const supabase = supabaseUrl && supabaseKey
@@ -66,3 +68,4 @@ app.listen(3000, () => {
     console.log('Server berjalan di http://localhost:3000');
     console.log('Dokumentasi Scalar dapat diakses di http://localhost:3000/reference');
 });
+export default app;
