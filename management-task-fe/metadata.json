@@ -1,0 +1,6 @@
+{
+  "name": "MataApp",
+  "description": "Project & Task Management Dashboard with Real-Time Chart Visualizations and Multi-User Team Authentication.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
